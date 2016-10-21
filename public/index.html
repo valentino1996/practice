@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html align="middle">
+
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	</head>
+
+	<body>
+	
+		<h1>Web-form</h1>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Input</h2>
+				<div>
+					<input id="name" type="text" placeholder="name"></input>
+				</div>
+				<div>
+					<input id="surname" type="text" placeholder="surname"></input>
+				</div>
+				<div>
+					<input id="email" type="text" placeholder="e-mail"></input>
+				</div>
+				<div>
+					<input id="age" type="text" placeholder="age"></input>
+				</div>
+				<div>
+					<input id="gender" type="text" placeholder="gender"></input>
+				</div>
+				<button id="inputbtn" class="btn btn-success">Save</button>
+			</div>
+			<div class="col-md-6">
+				<h2>Output</h2>
+				<h3>Put a name to show output</h3>
+				<input id="output" type="text" placeholder="put a name"></input>
+				<button id="displaybtn" class="btn btn-primary">Result</button>
+				<p></p>
+			</div>
+		</div>
+		
+	</body>
+	
+	<style>
+		h1{
+			font-size: 50px;
+			margin-bottom: 5%;
+		}
+		p{
+			font-size: 30px;
+		}
+		input{
+			margin: 1%;
+		}
+		form{
+			margin: 1%;
+		}
+	</style>
+
+	<script>
+	
+	$(document).ready(function(){
+	
+		$("#inputbtn").on("click", function(){
+	
+			$.ajax ({
+				url: "/",
+				type: "POST",
+				data: {
+					name: $("#name").val(),
+					surname: $("#surname").val(),
+					email: $("#email").val(),
+					age: $("#age").val(),
+					gender: $("#gender").val(),
+				},
+				success: function(data){
+					$("p").html(JSON.stringify(data));
+				}
+			
+			});
+			
+			$("#displaybtn").on("click", function(){
+			
+				$.ajax({
+					url:"/get",
+					type: "POST",
+					data: {
+						inputName: $("#output").val() 
+					},
+					success: function(output){
+						$("p").html(JSON.stringify(output));
+					}
+				});
+			
+			});
+			
+		});
+	
+	});
+	
+	</script>
+
+</html>
